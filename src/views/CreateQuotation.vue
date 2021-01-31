@@ -1,28 +1,58 @@
 <template>
     <v-container>
+        <v-container>
+            <v-btn
+                class="mx-2"
+                fab
+                dark
+                color="indigo"
+                @click="addNewLocation('Toilet')"
+            >
+                <v-icon dark>
+                    mdi-plus
+                </v-icon>
+            </v-btn>
+            <span>Add Location</span>
+        </v-container>
         <v-expansion-panels
             multiple
-            v-for="(section, $sectionIndex) in quote"
-            :key="$sectionIndex"
+            accordion
+            :value="expandedPanels"
+            v-for="(location, $locationIndex) in quote"
+            :key="$locationIndex"
             style="margin-bottom: 1rem;"
         >
             <v-expansion-panel>
-                <v-expansion-panel-header style="background-color: #efefef">
-                    <h1>{{ section.name }}</h1>
+                <v-expansion-panel-header>
+                    <h1>{{ location.location }}</h1>
                 </v-expansion-panel-header>
+                <v-container>
+                    <v-btn
+                        class="mx-2"
+                        fab
+                        dark
+                        color="indigo"
+                        @click="addNewTrade('Capentary', $locationIndex)"
+                    >
+                        <v-icon dark>
+                            mdi-plus
+                        </v-icon>
+                    </v-btn>
+                    <span>Add Trade</span>
+                </v-container>
                 <v-expansion-panel-content>
                     <v-expansion-panel
-                        v-for="(type, $typeIndex) in section.type"
-                        :key="$typeIndex"
+                        v-for="(trade, $tradeIndex) in location.trade"
+                        :key="$tradeIndex"
                     >
                         <v-expansion-panel-header>
-                            <h2>{{ type.name }}</h2>
+                            <h2>{{ trade.name }}</h2>
                         </v-expansion-panel-header>
                         <v-expansion-panel-content
-                            v-for="(item, $itemIndex) in type.items"
+                            v-for="(item, $itemIndex) in trade.items"
                             :key="$itemIndex"
                         >
-                            <v-card outlined style="padding:1rem;">
+                            <v-card style="padding:1rem;">
                                 <v-simple-table>
                                     <thead>
                                         <tr>
@@ -128,6 +158,26 @@
                                 </v-simple-table>
                             </v-card>
                         </v-expansion-panel-content>
+                        <v-container>
+                            <v-btn
+                                class="mx-2"
+                                fab
+                                dark
+                                color="indigo"
+                                @click="
+                                    addNewLineItem(
+                                        'Supply labour and materials to install screed levelling and waterproofing',
+                                        $locationIndex,
+                                        $tradeIndex
+                                    )
+                                "
+                            >
+                                <v-icon dark>
+                                    mdi-plus
+                                </v-icon>
+                            </v-btn>
+                            <span>Add Line Item</span>
+                        </v-container>
                     </v-expansion-panel>
                 </v-expansion-panel-content>
             </v-expansion-panel>
@@ -136,13 +186,17 @@
 </template>
 
 <script>
+import { uuid } from "../utils"
+
 export default {
     data() {
         return {
+            expandedPanels: [0, 1],
             quote: [
                 {
-                    name: "Kitchen",
-                    type: [
+                    location: "Kitchen",
+                    id: 123,
+                    trade: [
                         {
                             name: "Masonry Works",
                             items: [
@@ -157,135 +211,6 @@ export default {
                                             unit: "ft",
                                             unitPrice: 8,
                                             qty: 120
-                                        },
-                                        {
-                                            id: "2",
-                                            description:
-                                                "Supply labour and materials to install concealed floor traps",
-                                            unit: "ft",
-                                            unitPrice: 5,
-                                            qty: 100
-                                        }
-                                    ]
-                                },
-                                {
-                                    item: "Dresser",
-                                    id: 123,
-                                    lineItems: [
-                                        {
-                                            id: "1",
-                                            description:
-                                                "Supply labour and materials to install screed levelling and waterproofing",
-                                            unit: "ft",
-                                            unitPrice: 8,
-                                            qty: 120
-                                        },
-                                        {
-                                            id: "2",
-                                            description:
-                                                "Supply labour and materials to install concealed floor traps",
-                                            unit: "ft",
-                                            unitPrice: 5,
-                                            qty: 100
-                                        }
-                                    ]
-                                },
-                                {
-                                    item: "Basin",
-                                    id: 123,
-                                    lineItems: [
-                                        {
-                                            id: "1",
-                                            description:
-                                                "Supply labour and materials to install screed levelling and waterproofing",
-                                            unit: "ft",
-                                            unitPrice: 8,
-                                            qty: 120
-                                        },
-                                        {
-                                            id: "2",
-                                            description:
-                                                "Supply labour and materials to install concealed floor traps",
-                                            unit: "ft",
-                                            unitPrice: 5,
-                                            qty: 100
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    name: "Kitchen",
-                    type: [
-                        {
-                            name: "Masonry Works",
-                            items: [
-                                {
-                                    item: "Floor tiling",
-                                    name: "Component Name",
-                                    id: 123,
-                                    lineItems: [
-                                        {
-                                            id: "1",
-                                            description:
-                                                "Supply labour and materials to install screed levelling and waterproofing",
-                                            unit: "ft",
-                                            unitPrice: 8,
-                                            qty: 120
-                                        },
-                                        {
-                                            id: "2",
-                                            description:
-                                                "Supply labour and materials to install concealed floor traps",
-                                            unit: "ft",
-                                            unitPrice: 5,
-                                            qty: 100
-                                        }
-                                    ]
-                                },
-                                {
-                                    item: "Dresser",
-                                    id: 123,
-                                    lineItems: [
-                                        {
-                                            id: "1",
-                                            description:
-                                                "Supply labour and materials to install screed levelling and waterproofing",
-                                            unit: "ft",
-                                            unitPrice: 8,
-                                            qty: 120
-                                        },
-                                        {
-                                            id: "2",
-                                            description:
-                                                "Supply labour and materials to install concealed floor traps",
-                                            unit: "ft",
-                                            unitPrice: 5,
-                                            qty: 100
-                                        }
-                                    ]
-                                },
-                                {
-                                    item: "Basin",
-                                    id: 123,
-                                    lineItems: [
-                                        {
-                                            id: "1",
-                                            description:
-                                                "Supply labour and materials to install screed levelling and waterproofing",
-                                            unit: "ft",
-                                            unitPrice: 8,
-                                            qty: 120
-                                        },
-                                        {
-                                            id: "2",
-                                            description:
-                                                "Supply labour and materials to install concealed floor traps",
-                                            unit: "ft",
-                                            unitPrice: 5,
-                                            qty: 100
                                         }
                                     ]
                                 }
@@ -294,6 +219,43 @@ export default {
                     ]
                 }
             ]
+        }
+    },
+    methods: {
+        addNewLocation(locationName) {
+            this.quote.push({
+                location: locationName,
+                id: uuid(),
+                trade: []
+            })
+        },
+        addNewTrade(tradeName, idx) {
+            this.quote[idx].trade.unshift({
+                name: tradeName,
+                items: [
+                    {
+                        item: "Insert Line Item Name",
+                        id: uuid(),
+                        lineItems: []
+                    }
+                ]
+            })
+        },
+        addNewLineItem(lineItemName, locationIdx, tradeIdx) {
+            this.quote[locationIdx].trade[tradeIdx].items.unshift({
+                item: "Floor tiling",
+                id: 123,
+                lineItems: [
+                    {
+                        id: "1",
+                        description:
+                            "Supply labour and materials to install screed levelling and waterproofing",
+                        unit: "ft",
+                        unitPrice: 8,
+                        qty: 120
+                    }
+                ]
+            })
         }
     }
 }
