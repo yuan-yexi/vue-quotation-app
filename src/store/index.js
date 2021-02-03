@@ -2,16 +2,19 @@ import Vue from "vue"
 import Vuex from "vuex"
 import defaultBoard from "./../database.js"
 import defaultQuote from "./../quotes.js"
+import defaultCostBook from "./../cost.js"
 
 Vue.use(Vuex)
 
 const board = JSON.parse(localStorage.getItem("board")) || defaultBoard
 const quotes = defaultQuote
+const costBook = defaultCostBook
 
 export default new Vuex.Store({
     state: {
         board,
-        quotes
+        quotes,
+        costBook
     },
     getters: {
         getProject(state) {
