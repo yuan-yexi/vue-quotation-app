@@ -28,12 +28,26 @@ const routes = [
         ]
     },
     {
-        path: "/create",
-        name: "CreateQuotation",
-        component: () => import("../views/CreateQuotation.vue")
+        path: "/allquotes",
+        name: "AllQuotes",
+        component: () => import("../views/AllQuotes.vue"),
+        children: [
+            {
+                path: "quote/:id",
+                name: "QuoteDetails",
+                props: true,
+                component: () => import("../components/QuoteDetails.vue")
+            }
+        ]
     },
     {
-        path: "/createnew",
+        path: "/editquote/:id",
+        name: "QuoteEditor",
+        props: true,
+        component: () => import("../views/QuoteEditor.vue")
+    },
+    {
+        path: "/create-new",
         name: "Create",
         component: () => import("../views/Create.vue")
     }

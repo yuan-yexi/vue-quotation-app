@@ -615,6 +615,7 @@ export default {
 
             return totalCost
         },
+        /* Calculate total of all line item price */
         calComponentLineItemsCost(component) {
             let i
             let totalsArray = []
@@ -623,7 +624,7 @@ export default {
             }
             return totalsArray.reduce((a, b) => a + b, 0)
         },
-        // Calculate grand total of entire component
+        /* Calculate grand total of entire component */
         calComponentGrandTotalCost(component) {
             const componentQty = component.componentQty
             const componentUnitCost = component.componentUnitCost
@@ -636,7 +637,7 @@ export default {
             return grandTotalCost
         },
         /* Functions to push data when add location/trade/component/lineItem is selected */
-        // Add a new location
+        /* Add a new location */
         addNewLocation() {
             this.quotes.quote.push({
                 location: "",
@@ -644,10 +645,14 @@ export default {
                 trades: []
             })
         },
-        // Add a new trade
+        /* Add a new trade */
         addNewTrade(idx) {
             this.quotes.quote[idx].trades.push({
                 name: "New Trade",
+                id: uuid(),
+                tradeTotalPrice: 0,
+                tradeTotalCost: 0,
+                tradeTotalProfit: 0,
                 components: [
                     {
                         name: "",
@@ -679,7 +684,7 @@ export default {
             })
             this.expandedPanel = [idx]
         },
-        // Add a new component
+        /* Add a new component */
         addNewComponent(idx, tradeIdx) {
             this.quotes.quote[idx].trades[tradeIdx].components.push({
                 name: "",
@@ -708,7 +713,7 @@ export default {
                 ]
             })
         },
-        // Add a new line item
+        /* Add a new line item */
         addNewLineItem(locationIdx, tradeIdx, itemIdx) {
             this.quotes.quote[locationIdx].trades[tradeIdx].components[
                 itemIdx

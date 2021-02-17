@@ -82,12 +82,12 @@ export default {
             return totalValueArray
         },
         isProjectOpen() {
-            return this.$route.name === "Project"
+            return this.$route.name === "Project" //show only if route name is project detail
         }
     },
     methods: {
         openProjectDetails(project) {
-            this.$router.push({ name: "Project", params: { id: project.id } })
+            this.$router.push({ name: "Project", params: { id: project.id } }) // push to child view of project detail and pass id to use as identifier as getter
         },
         pickupProject(e, projectIndex, fromColumnIndex) {
             e.dataTransfer.effectAllowed = "move"

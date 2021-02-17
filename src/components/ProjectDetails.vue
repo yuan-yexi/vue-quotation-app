@@ -24,9 +24,10 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex"
+import { mapState, mapGetters } from "vuex"
 export default {
     computed: {
+        ...mapState(["quotesCollection"]),
         ...mapGetters(["getProject"]),
         project() {
             return this.getProject(this.$route.params.id)
