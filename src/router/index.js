@@ -1,55 +1,54 @@
 import Vue from "vue"
 import VueRouter from "vue-router"
-import Home from "../views/Home.vue"
 
 Vue.use(VueRouter)
 
 const routes = [
     {
         path: "/",
-        name: "Home",
-        component: Home
-    },
-    {
-        path: "/about",
-        name: "About",
-        component: () => import("../views/About.vue")
-    },
-    {
-        path: "/dashboard",
         name: "Dashboard",
-        component: () => import("../views/Dashboard.vue"),
+        component: () => import("../views/Dashboard.vue")
+    },
+    {
+        path: "/projects",
+        name: "Projects",
+        component: () => import("../views/Projects.vue"),
         children: [
             {
                 path: "project/:id",
                 name: "Project",
-                component: () => import("../components/ProjectDetails.vue")
+                component: () =>
+                    import("../components/projects/ProjectDetails.vue")
             }
         ]
     },
     {
-        path: "/allquotes",
-        name: "AllQuotes",
-        component: () => import("../views/AllQuotes.vue"),
+        path: "/quotes",
+        name: "Quotes",
+        component: () => import("../views/Quotes.vue"),
         children: [
             {
-                path: "quote/:id",
-                name: "QuoteDetails",
+                path: "list",
+                name: "QuotesTable",
                 props: true,
-                component: () => import("../components/QuoteDetails.vue")
+                component: () => import("../components/quotes/QuotesTable.vue"),
+                children: [
+                    {
+                        path: ":id",
+                        name: "QuoteDetails",
+                        props: true,
+                        component: () =>
+                            import("../components/quotes/QuoteDetails.vue")
+                    }
+                ]
+            },
+            {
+                path: "edit/:id",
+                name: "QuoteEditor",
+                props: true,
+                component: () => import("../components/quotes/QuoteEditor.vue")
             }
         ]
-    },
-    {
-        path: "/editquote/:id",
-        name: "QuoteEditor",
-        props: true,
-        component: () => import("../views/QuoteEditor.vue")
-    },
-    {
-        path: "/create-new",
-        name: "Create",
-        component: () => import("../views/Create.vue")
     }
 ]
 

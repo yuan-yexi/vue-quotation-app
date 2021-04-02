@@ -1,14 +1,17 @@
 <template>
-    <v-overlay opacity="0.1" @click="closeProjectDetails">
-        <v-card class="mx-auto" max-width="600">
-            <v-img
-                src="https://cdn.vuetifyjs.com/images/cards/forest-art.jpg"
-            ></v-img>
-
-            <v-card-text>
+    <v-dialog
+        transition="dialog-bottom-transition"
+        max-width="1600"
+        persistent
+        v-model="dialogProjectDetails"
+    >
+        <v-card class="mx-auto" max-width="1600">
+            <v-card-title>
                 <h2 class="title primary--text">
                     {{ project.name }}
                 </h2>
+            </v-card-title>
+            <v-card-text>
                 <p>
                     {{ project.address }}
                 </p>
@@ -16,16 +19,24 @@
 
             <v-card-actions>
                 <v-btn color="orange lighten-2" @click="closeProjectDetails">
+                    Edit
+                </v-btn>
+                <v-btn color="orange lighten-2" @click="closeProjectDetails">
                     Close
                 </v-btn>
             </v-card-actions>
         </v-card>
-    </v-overlay>
+    </v-dialog>
 </template>
 
 <script>
 import { mapState, mapGetters } from "vuex"
 export default {
+    data() {
+        return {
+            dialogProjectDetails: true
+        }
+    },
     computed: {
         ...mapState(["quotesCollection"]),
         ...mapGetters(["getProject"]),
@@ -35,7 +46,7 @@ export default {
     },
     methods: {
         closeProjectDetails() {
-            this.$router.push({ name: "Dashboard" })
+            this.$router.back()
         }
     }
 }

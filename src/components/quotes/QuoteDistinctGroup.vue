@@ -1,19 +1,28 @@
 <template>
     <div class="mt-2">
+        <AddNewGroup :quoteId="quoteId" :groupType="groupType" />
         <div
-            v-for="(distinctLocation,
-            $distinctLocationIndex) in distinctLocations"
-            :key="$distinctLocationIndex"
+            v-for="(distinctGrouping,
+            $distinctGroupingIndex) in distinctGroupings"
+            :key="$distinctGroupingIndex"
         >
-            <v-container>
-                <h1>{{ distinctLocation }}</h1>
+            <v-container class="mx-2">
+                <h1>{{ distinctGrouping }}</h1>
             </v-container>
+            <v-divider></v-divider>
+            <AddCostGroups
+                :distinctGrouping="distinctGrouping"
+                :distinctGroupings="distinctGroupings"
+            />
             <div
                 v-for="(costGroup, $costGroupIndex) in costGroups"
                 :key="$costGroupIndex"
             >
                 <v-expansion-panels
-                    v-if="costGroup.location === distinctLocation"
+                    v-if="
+                        costGroup.location === distinctGrouping ||
+                            costGroup.trade === distinctGrouping
+                    "
                     popout
                     class="mb-2"
                 >
@@ -125,7 +134,7 @@
                                     </v-col>
                                 </v-row>
                             </v-container>
-                            <AddCostGroup
+                            <AddLineItems
                                 :quoteId="quoteId"
                                 :costGroupId="costGroup.uid"
                                 :existingLineItems="costGroup.lineItems"
@@ -139,13 +148,17 @@
 </template>
 
 <script>
-import AddCostGroup from "@/components/add_line_items/AddCostGroup.vue"
+import AddLineItems from "@/components/add_line_items/AddLineItems.vue"
+import AddCostGroups from "@/components/add_cost_groups/AddCostGroups.vue"
+import AddNewGroup from "@/components/add_groups/AddNewGroup.vue"
 
 export default {
     components: {
-        AddCostGroup
+        AddLineItems,
+        AddCostGroups,
+        AddNewGroup
     },
-    props: ["distinctLocations", "costGroups", "quoteId"],
+    props: ["distinctGroupings", "costGroups", "quoteId", "groupType"],
     methods: {
         /* Dispatch action to Vuex Store */
         setTotalLineItemPrice(

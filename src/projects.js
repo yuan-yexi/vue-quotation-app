@@ -2,7 +2,7 @@ import { uuid } from "./utils"
 
 export default {
     name: "GamesWorkShop",
-    clientId: "264570",
+    clientId: uuid(),
     columns: [
         {
             name: "New Leads",
@@ -13,7 +13,10 @@ export default {
                     name: "Joe Doe",
                     value: 40000,
                     id: uuid(),
-                    userAssigned: "Samuel Tan"
+                    userAssigned: "Samuel Tan",
+                    status: "",
+                    quoteId: "",
+                    tags: []
                 },
                 {
                     address: "12 Bedok North Ave 3",
@@ -21,7 +24,10 @@ export default {
                     name: "Jane Cooper",
                     value: 50000,
                     id: uuid(),
-                    userAssigned: "Samuel Tan"
+                    userAssigned: "Samuel Tan",
+                    status: "",
+                    quoteId: "",
+                    tags: []
                 },
                 {
                     address: "12 Bedok North Ave 3",
@@ -29,7 +35,10 @@ export default {
                     name: "Sarah Conor",
                     value: 60000,
                     id: uuid(),
-                    userAssigned: "Samuel Tan"
+                    userAssigned: "Samuel Tan",
+                    status: "",
+                    quoteId: "",
+                    tags: []
                 }
             ]
         },
@@ -42,7 +51,10 @@ export default {
                     name: "James Dean",
                     value: 70000,
                     id: uuid(),
-                    userAssigned: "Samuel Tan"
+                    userAssigned: "Samuel Tan",
+                    status: "",
+                    quoteId: "",
+                    tags: []
                 }
             ]
         },
@@ -55,7 +67,10 @@ export default {
                     name: "Andy Burr",
                     value: 80000,
                     id: uuid(),
-                    userAssigned: "Samuel Tan"
+                    userAssigned: "Samuel Tan",
+                    status: "",
+                    quoteId: "",
+                    tags: []
                 }
             ]
         },
@@ -68,7 +83,10 @@ export default {
                     name: "Bruce Fuss",
                     value: 90000,
                     id: uuid(),
-                    userAssigned: "Samuel Tan"
+                    userAssigned: "Samuel Tan",
+                    status: "",
+                    quoteId: "",
+                    tags: []
                 }
             ]
         },
@@ -81,7 +99,10 @@ export default {
                     name: "Drew James",
                     value: 100000,
                     id: uuid(),
-                    userAssigned: "Samuel Tan"
+                    userAssigned: "Samuel Tan",
+                    status: "",
+                    quoteId: "",
+                    tags: []
                 }
             ]
         }

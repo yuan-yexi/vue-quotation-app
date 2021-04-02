@@ -1,66 +1,59 @@
 <template>
-    <v-app id="inspire">
-        <v-app-bar app color="white" flat>
-            <v-container class="py-0 fill-height">
-                <v-avatar
-                    class="mr-10"
-                    color="grey darken-1"
-                    size="32"
-                ></v-avatar>
+    <v-app>
+        <v-toolbar color="#fcb69f" light flat>
+            <v-app-bar-nav-icon
+                @click.stop="drawer = !drawer"
+            ></v-app-bar-nav-icon>
 
-                <v-btn v-for="link in links" :key="link" text>
-                    {{ link }}
-                </v-btn>
+            <v-toolbar-title>Your Dashboard</v-toolbar-title>
 
-                <v-spacer></v-spacer>
+            <v-spacer></v-spacer>
 
-                <v-responsive max-width="260">
-                    <v-text-field
-                        dense
-                        flat
-                        hide-details
-                        rounded
-                        solo-inverted
-                    ></v-text-field>
-                </v-responsive>
-            </v-container>
-        </v-app-bar>
+            <v-btn icon>
+                <v-icon>mdi-magnify</v-icon>
+            </v-btn>
 
+            <v-btn icon>
+                <v-icon>mdi-dots-vertical</v-icon>
+            </v-btn>
+
+            <template v-slot:extension>
+                <v-tabs v-model="tab" align-with-title fixed-tabs>
+                    <v-tabs-slider color="yellow"></v-tabs-slider>
+                    <v-tab @click="toggleDashboard">
+                        dashboard
+                    </v-tab>
+                    <v-tab @click="toggleProjects">
+                        projects
+                    </v-tab>
+                    <v-tab @click="toggleQuotes">
+                        quotes
+                    </v-tab>
+                </v-tabs>
+            </template>
+        </v-toolbar>
         <v-main class="grey lighten-3">
             <v-container>
-                <v-row>
-                    <v-col cols="2">
-                        <v-sheet rounded="lg">
-                            <v-list color="transparent">
-                                <v-list-item v-for="n in 5" :key="n" link>
-                                    <v-list-item-content>
-                                        <v-list-item-title>
-                                            List Item {{ n }}
-                                        </v-list-item-title>
-                                    </v-list-item-content>
-                                </v-list-item>
-
-                                <v-divider class="my-2"></v-divider>
-
-                                <v-list-item link color="grey lighten-4">
-                                    <v-list-item-content>
-                                        <v-list-item-title>
-                                            Refresh
-                                        </v-list-item-title>
-                                    </v-list-item-content>
-                                </v-list-item>
-                            </v-list>
-                        </v-sheet>
-                    </v-col>
-
-                    <v-col>
-                        <v-sheet min-height="95vh" rounded="lg">
-                            <router-view />
-                        </v-sheet>
-                    </v-col>
-                </v-row>
+                <v-sheet min-height="95vh">
+                    <router-view />
+                </v-sheet>
             </v-container>
         </v-main>
+        <v-container>
+            <v-navigation-drawer v-model="drawer" absolute temporary>
+                <v-list dense>
+                    <v-list-item v-for="item in items" :key="item.title" link>
+                        <v-list-item-icon>
+                            <v-icon>{{ item.icon }}</v-icon>
+                        </v-list-item-icon>
+
+                        <v-list-item-title>
+                            {{ item.title }}
+                        </v-list-item-title>
+                    </v-list-item>
+                </v-list>
+            </v-navigation-drawer>
+        </v-container>
     </v-app>
 </template>
 
@@ -68,7 +61,29 @@
 export default {
     data() {
         return {
-            links: ["Dashboard", "Messages", "Profile", "Updates"]
+            drawer: null,
+            items: [
+                { title: "Home", icon: "mdi-view-dashboard" },
+                { title: "About", icon: "mdi-forum" }
+            ],
+            tab: null
+        }
+    },
+    methods: {
+        toggleDashboard() {
+            this.$router.push({
+                name: "Dashboard"
+            })
+        },
+        toggleProjects() {
+            this.$router.push({
+                name: "Projects"
+            })
+        },
+        toggleQuotes() {
+            this.$router.push({
+                name: "QuotesTable"
+            })
         }
     }
 }

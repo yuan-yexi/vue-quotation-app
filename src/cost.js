@@ -1,6 +1,21 @@
 import { uuid } from "./utils"
 
 export default {
+    costGroupCosts: [
+        {
+            costGroupName: "Floor Tiling",
+            costGroupDescription: "Tile floors in kitchen",
+            uid: uuid(),
+            location: "Kitchen",
+            trade: "Masonry",
+            totalPrice: 0,
+            totalCost: 0,
+            totalProfit: 0,
+            totalMargins: 0,
+            tags: [],
+            lineItems: []
+        }
+    ],
     lineItemCosts: [
         {
             lineItemName: "Supply labour and materials to paint ceiling",

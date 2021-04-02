@@ -3,34 +3,21 @@
         <v-row>
             <v-container>
                 <v-btn
-                    class="ma-4"
+                    class="ma-2"
                     fab
                     dark
                     small
-                    color="primary darken-2"
-                    @click="addLineItemDialog = true"
+                    color="primary darken-3"
+                    @click="addCostGroupDialog = true"
                 >
                     <v-icon dark>
-                        mdi-plus
+                        mdi-home
                     </v-icon>
                 </v-btn>
-                <span>Add Line Items</span>
-                <v-btn
-                    class="ma-4"
-                    fab
-                    dark
-                    small
-                    color="primary darken-2"
-                    @click="editCurrentLineItems"
-                >
-                    <v-icon dark>
-                        mdi-pencil
-                    </v-icon>
-                </v-btn>
-                <span>Edit Current Line Items</span>
+                <span>Add a New {{ groupType }}</span>
             </v-container>
             <v-dialog
-                v-model="addLineItemDialog"
+                v-model="addCostGroupDialog"
                 fullscreen
                 hide-overlay
                 transition="dialog-bottom-transition"
@@ -42,7 +29,7 @@
                             <v-icon>mdi-close</v-icon>
                         </v-btn>
                         <v-toolbar-title>
-                            Add new line item
+                            Add new {{ groupType }}
                         </v-toolbar-title>
                         <v-spacer></v-spacer>
                         <v-toolbar-items></v-toolbar-items>
@@ -60,39 +47,10 @@
                     </v-card-actions>
                     <v-card-text>
                         <v-list>
-                            <ToBeAddedLineItemsTable
-                                :headers="headers"
-                                :localToBeAdded="localToBeAdded"
-                            />
-                            <CostBookLineItemsTable
-                                :headers="headers"
-                                :localToBeAdded="localToBeAdded"
-                                :costCollection="costCollection"
-                            />
+                            Add Cost Groups here
                         </v-list>
                     </v-card-text>
                     <div style="flex: 1 1 auto;"></div>
-                </v-card>
-            </v-dialog>
-            <v-dialog v-model="currentLineItemsTable" max-width="1200">
-                <v-card>
-                    <v-card-title>
-                        Edit Current Line Items
-                    </v-card-title>
-                    <v-card-text>
-                        <ExistingLineItemsTable
-                            :headers="headers"
-                            :existingLineItems="existingLineItems"
-                        />
-                    </v-card-text>
-                    <v-card-actions>
-                        <v-btn color="primary" text @click="closeAndClear">
-                            Save
-                        </v-btn>
-                        <v-btn color="primary" text @click="closeAndClear">
-                            Continue Without Saving
-                        </v-btn>
-                    </v-card-actions>
                 </v-card>
             </v-dialog>
             <v-dialog v-model="closeAlert" max-width="500px">
@@ -119,25 +77,23 @@
 </template>
 <script>
 import { mapState } from "vuex"
-import ExistingLineItemsTable from "@/components/add_line_items/ExistingLineItem.vue"
-import ToBeAddedLineItemsTable from "@/components/add_line_items/ToBeAddedLineItem.vue"
-import CostBookLineItemsTable from "@/components/add_line_items/CostBookLineItem.vue"
 
 export default {
     data() {
         return {
-            addLineItemDialog: false,
+            addCostGroupDialog: false,
             closeAlert: false,
             currentLineItemsTable: false,
             localToBeAdded: []
         }
     },
-    components: {
-        ExistingLineItemsTable,
-        ToBeAddedLineItemsTable,
-        CostBookLineItemsTable
-    },
-    props: ["quoteId", "costGroupId", "lineItemId", "existingLineItems"],
+    props: [
+        "quoteId",
+        "costGroupId",
+        "lineItemId",
+        "distinctLocation",
+        "groupType"
+    ],
     computed: {
         ...mapState(["costCollection"]),
         headers() {
@@ -166,7 +122,7 @@ export default {
     methods: {
         closeAndClear() {
             this.localToBeAdded = []
-            this.addLineItemDialog = false
+            this.addCostGroupDialog = false
             this.closeAlert = false
         },
         closeWarning() {
@@ -177,7 +133,7 @@ export default {
                 this.existingLineItems.push(this.localToBeAdded[newItem])
             }
             this.localToBeAdded = []
-            this.addLineItemDialog = false
+            this.addCostGroupDialog = false
             this.closeAlert = false
         },
         editCurrentLineItems() {
